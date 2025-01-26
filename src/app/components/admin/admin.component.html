@@ -1,0 +1,37 @@
+<div class="admin-form-container">
+  <h1>Add New Product</h1>
+  <form [formGroup]="productForm" (ngSubmit)="submit()">
+    <div class="form-field">
+      <label for="title">Title</label>
+      <input id="title" formControlName="title" type="text" />
+      <div *ngIf="hasError('title', 'required')" class="error">Title is required</div>
+    </div>
+
+    <div class="form-field">
+      <label for="price">Price</label>
+      <input id="price" formControlName="price" type="number" />
+      <div *ngIf="hasError('price', 'required')" class="error">Price is required</div>
+      <div *ngIf="hasError('price', 'min')" class="error">Price must be greater than 0</div>
+    </div>
+
+    <div class="form-field">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <div *ngIf="hasError('description', 'required')" class="error">Description is required</div>
+    </div>
+
+    <div class="form-field">
+      <label for="category">Category</label>
+      <input id="category" formControlName="category" type="text" />
+      <div *ngIf="hasError('category', 'required')" class="error">Category is required</div>
+    </div>
+
+    <div class="form-field">
+      <label for="image">Image URL</label>
+      <input id="image" formControlName="image" type="text" />
+      <div *ngIf="hasError('image', 'required')" class="error">Image URL is required</div>
+    </div>
+
+    <button type="submit" [disabled]="productForm.invalid">Add Product</button>
+  </form>
+</div>

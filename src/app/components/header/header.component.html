@@ -1,0 +1,48 @@
+<header class="header">
+  <div class="logo">
+    <a (click)="goToHome()">
+      <img src="/image/logo.png" alt="Logo" />
+      <span class="company-name">SnapShop</span>
+    </a>
+  </div>
+
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Search for products..."
+      [(ngModel)]="searchQuery"
+      (keyup)="onSearchInput()"
+    />
+    <button class="search-btn">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+
+  <div class="cart-icon" (click)="toggleCartDropdown()">
+    <i class="fa fa-shopping-cart"></i>
+    <span
+      matBadge="{{ cartItemCount }}"
+      matBadgeColor="accent"
+      class="item-count"
+      >{{ cartItemCount }}</span
+    >
+
+    <div class="cart-dropdown" [ngClass]="{ show: showCartDropdown }">
+      <ul>
+        <li *ngFor="let item of cartItems">
+          <span>{{ item.title }} (x{{ item.quantity }})</span>
+        </li>
+      </ul>
+      <button (click)="goToCheckout()">Checkout</button>
+    </div>
+  </div>
+
+  <div class="add-product-btn">
+    <button (click)="goToAddProduct()">Add Product</button>
+  </div>
+
+
+  <div class="dark-mode-toggle">
+    <button (click)="toggleDarkMode()">Toggle Dark Mode</button>
+  </div>
+</header>

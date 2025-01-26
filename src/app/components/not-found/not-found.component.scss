@@ -1,0 +1,49 @@
+
+.not-found-container {
+    text-align: center;
+    margin-top: 200px;  
+    padding: 30px;
+    background-color: #f9f9f9; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+
+    max-width: 910px;  
+    margin-left: auto;  
+    margin-right: auto;  
+    h1 {
+      font-size: 6rem;  
+      color:	#e85550; 
+      font-weight: 700;
+      margin: 0;
+      text-transform: uppercase;
+    }
+  
+    p {
+      font-size: 1.6rem;
+      color: #555555;  
+      margin: 20px 0;
+    }
+  
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 1.4em;
+      color: #ffffff;
+      background-color: #4F9CF9; 
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+  
+      &:hover {
+        background-color: #0056b3;  
+        transform: translateY(-2px);  
+      }
+  
+      &:active {
+        background-color: #0b0069;  
+        transform: translateY(1px);  
+      }
+    }
+  }
+  

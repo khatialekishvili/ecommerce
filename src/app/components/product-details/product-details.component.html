@@ -1,0 +1,53 @@
+<h1>Product Details</h1>
+<div class="product-details" *ngIf="product">
+  <div class="image-container">
+    <img [src]="product.image" alt="{{ product.title }}">
+  </div>
+
+  <div class="product-info">
+    <h2>{{ product.title }}</h2>
+    <p>{{ product.description }}</p>
+    <p>{{ product.price | currency }}</p>
+
+    <div class="quantity-selector">
+      <button (click)="decreaseQuantity()" class="quantity-button">-</button>
+      <span>{{ quantity }}</span>
+      <button (click)="increaseQuantity()" class="quantity-button">+</button>
+    </div>
+
+    <div class="product-actions">
+      <button (click)="addToCart()" [routerLink]="['/cart']" routerLinkActive="router-link-active" class="add-to-cart">Add to cart</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
+
+
+
+
+<!-- <h1>Product Details</h1>
+<div class="product-details" *ngIf="product">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{product.title}}</mat-card-title>
+        </mat-card-header>
+        <img [src]="product.image" alt="{{product.title}}" mat-card-image>
+        <mat-card-content>
+            <p>{{product.description}}</p>
+            <p>Price: ${{product.price | currency}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="addToCart()">Add to cart</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+  <ng-template #loading>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+  
+ -->
+

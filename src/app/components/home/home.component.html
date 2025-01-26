@@ -1,0 +1,25 @@
+<h1>Shop Our Latest Collection</h1>
+@if(spinner){
+<div class="centered">
+  <span class="loader"></span>
+</div>
+}
+<div class="product-list">
+  <div class="product" *ngFor="let product of products">
+    <img [src]="product.image" alt="{{ product.title }}" />
+    <h3>{{ product.title }}</h3>
+    <p>{{ product.price | currency }}</p>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="addToCart(product)">
+        Add to Cart
+      </button>
+      <a
+        [routerLink]="['/product', product.id]"
+        routerLinkActive="router-link-active"
+      >
+        <button class="view-details">View Details</button>
+      </a>
+    </div>
+  </div>
+</div>
