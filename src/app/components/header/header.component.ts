@@ -112,9 +112,10 @@ export class HeaderComponent implements OnInit {
     this.searchResults = [];
     this.isLoading = false;
 
+    this.productService.localProducts.next(this.productService.withoutSearchLocalPorducts.getValue());
+  
     this.showCartDropdown = false;
     this.showUserDropdown = false;
-
     this.router.navigate(['/']);
   }
 
