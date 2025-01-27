@@ -28,20 +28,22 @@ export class HomeComponent {
   spinner: boolean = false;
 
   constructor(
-    private productService: ProductService,
+    public productService: ProductService,
     private cartservice: CartService,
     private searchService: SearchService
   ) {}
 
   ngOnInit(): void {
-    
     this.getProducts();
-
     this.searchService.searchResults$.subscribe((items) => {
       this.spinner = true;
-      this.products = [];
+      // this.productService.localProducts.next(items);
+      console.log(items);
+
       setTimeout(() => {
-        this.products = items;
+        if (items.length !== 0) {
+          this.productService.localProducts.next(items);
+        }
         this.spinner = false;
       }, 1000);
     });
@@ -52,14 +54,29 @@ export class HomeComponent {
   }
 
   getProducts() {
-    const localProducts = this.productService.getLocalProducts();
     this.spinner = true;
     this.productService
       .getProducts()
-      .pipe(tap(console.log), delay(2000))
+      .pipe(delay(2000))
       .subscribe((data) => {
+        console.log(data);
+
         this.spinner = false;
-        this.products = data;
       });
+  }
+  deleteFromArray(product: IProduct) {
+    console.log(product);
+    
+    this.productService.localProducts.next(
+      this.productService.localProducts
+        .getValue()
+        .filter((item) => item.id !== product.id)
+    );
+
+    this.productService.withoutSearchLocalPorducts.next(
+      this.productService.withoutSearchLocalPorducts
+        .getValue()
+        .filter((item) => item.id !== product.id)
+    );
   }
 }

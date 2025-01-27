@@ -1,4 +1,10 @@
-import {Component,OnInit,HostListener,Output,EventEmitter,} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { CartService } from '../../shared/cart.service';
 import { AuthService } from '../../shared/auth.service';
 import { Router } from '@angular/router';
@@ -41,7 +47,6 @@ export class HeaderComponent implements OnInit {
     const savedMode = localStorage.getItem('darkMode');
     this.isDarkMode = savedMode === 'true';
 
-    // Apply dark mode class if preference is saved as true
     if (this.isDarkMode) {
       document.body.classList.add('dark-mode');
     }
@@ -56,20 +61,12 @@ export class HeaderComponent implements OnInit {
 
     this.searchSubject
       .pipe(
-        tap(console.log),
         debounceTime(500),
         switchMap((query) => {
-          const trimmedQuery = query.trim().toLowerCase();
-
-          if (!trimmedQuery) {
-            return this.productService.getProducts();
-          } else {
-            return this.searchService.search(trimmedQuery);
-          }
+          return this.productService.withoutSearchLocalPorducts;
         })
       )
       .subscribe((results) => {
-        console.log('Fetched products:', results);
         this.searchResults = this.searchQuery.trim()
           ? results.filter((product) =>
               product.category
@@ -77,8 +74,7 @@ export class HeaderComponent implements OnInit {
                 .includes(this.searchQuery.trim().toLowerCase())
             )
           : results;
-
-        console.log(this.searchResults);
+        console.log('sanam gadava');
 
         this.searchService.updateSearchResults(this.searchResults);
         this.isLoading = false;
@@ -86,13 +82,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onSearchInput(): void {
-    if (this.searchQuery.trim()) {
-      this.isLoading = true;
-      this.searchSubject.next(this.searchQuery);
-    } else {
-      this.searchResults = [];
-      this.isLoading = false;
-    }
+    this.isLoading = true;
+    this.searchSubject.next(this.searchQuery);
   }
 
   goToProductPage(productId: string): void {
@@ -113,18 +104,17 @@ export class HeaderComponent implements OnInit {
   }
 
   goToAddProduct() {
-    console.log("Navigating to Add Product page");
-  this.router.navigateByUrl('/admin')
+    this.router.navigateByUrl('/admin');
   }
 
   goToHome(): void {
-    this.searchQuery = ''; 
+    this.searchQuery = '';
     this.searchResults = [];
     this.isLoading = false;
-    
+
     this.showCartDropdown = false;
     this.showUserDropdown = false;
-    
+
     this.router.navigate(['/']);
   }
 

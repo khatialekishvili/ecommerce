@@ -27,7 +27,6 @@ export class ProductDetailsComponent {
     const id = +this.route.snapshot.paramMap.get('id')!;
     this.productService.getProductById(id).subscribe((data) => {
       this.product = data;
-      console.log(this.product);
     });
   }
 

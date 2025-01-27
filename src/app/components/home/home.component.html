@@ -3,17 +3,24 @@
 <div class="centered">
   <span class="loader"></span>
 </div>
-}
+} @if(!spinner){
 <div class="product-list">
-  <div class="product" *ngFor="let product of products">
+  <div
+    class="product"
+    *ngFor="let product of this.productService.localProducts | async"
+  >
     <img [src]="product.image" alt="{{ product.title }}" />
     <h3>{{ product.title }}</h3>
     <p>{{ product.price | currency }}</p>
+    <p>Category: {{ product.category }}</p>
 
     <div class="button-container">
       <button mat-raised-button color="primary" (click)="addToCart(product)">
         Add to Cart
       </button>
+      @if(product.added){ 
+        <button (click)="deleteFromArray(product)">delete</button>
+      }
       <a
         [routerLink]="['/product', product.id]"
         routerLinkActive="router-link-active"
@@ -23,3 +30,4 @@
     </div>
   </div>
 </div>
+}

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../shared/product.service';
 import {MatSelectModule} from '@angular/material/select';
-// import {MatInputModule} from '@angular/material/input';
-// import {MatFormFieldModule} from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 
 
@@ -31,7 +29,7 @@ export class AdminComponent {
   submit() : void {
     if(this.productForm.valid){
       this.productService.addProduct(this.productForm.value).subscribe(() =>{
-        alert('Product added successfully');
+        alert('Product added successfully, Go to Home page to see the product');
         this.productForm.reset();
       })
     }

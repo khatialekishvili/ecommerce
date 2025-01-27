@@ -183,7 +183,7 @@
     background-color: #f0f0f0;
   }
 
-  .dark-mode-toggle button {
+  .dark-mode-login button {
     padding: 8px 12px;
     background-color: #333;
     color: #fff;
@@ -192,24 +192,22 @@
     border-radius: 5px;
   }
 
-  .dark-mode-toggle button:hover {
+  .dark-mode-login button:hover {
     background-color: #555;
   }
 
   .buttons-container {
     display: flex;
-    // justify-content:, flex-start;
     align-items: center;
-    // gap: 10px; 
   }
 
   .add-product-btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     button {
-      padding: 10px 15px;
+      padding: 10px 19px;
       background-color: #ff6347;
       color: white;
       border: none;
@@ -217,13 +215,12 @@
       cursor: pointer;
       font-size: 16px;
       margin-left: 20px;
+      margin-right: 74px;
     }
-    
+
     button:hover {
       background-color: #e5533d;
     }
-
-    
   }
 
   @media (max-width: 1024px) {
@@ -240,6 +237,7 @@
     .search-bar {
       width: 100%;
       margin-top: 10px;
+      margin-right: 54px;
     }
 
     .buttons-container {
@@ -351,16 +349,16 @@
       padding: 10px;
     }
 
-    .dark-mode-toggle button {
+    .dark-mode-login button {
       padding: 8px 10px;
       font-size: 14px;
     }
 
     .add-product-btn {
-      margin-top: 10px; 
+      margin-top: 10px;
       button {
         width: 100%;
-        padding: 12px 0; 
+        padding: 12px 0;
       }
     }
   }

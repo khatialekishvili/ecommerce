@@ -1,26 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { IProduct } from '../../app/model/product.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private apiUrl = 'https://fakestoreapi.com/products';
-  private localProducts: IProduct[] = [];
+  public localProducts: BehaviorSubject<IProduct[]> = new BehaviorSubject<
+    IProduct[]
+  >([]);
+  public withoutSearchLocalPorducts: BehaviorSubject<IProduct[]> = new BehaviorSubject<
+  IProduct[]
+>([]);
   
+  private productsEmitted: boolean = false;
+
   productsSubject: any;
 
   constructor(private http: HttpClient) {}
 
-  getLocalProducts(): IProduct[] {
+  getLocalProducts(): any {
     return this.localProducts;
   }
 
-  
   getProducts(): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(this.apiUrl).pipe(
+      tap((data) => {
+        if (this.productsEmitted === false) {
+          this.localProducts.next(data);
+          this.withoutSearchLocalPorducts.next(data);
+          this.productsEmitted = true;
+        }
+      }),
       catchError((error) => {
         console.error('Error fetching products:', error);
         return throwError(() => new Error('Error fetching products'));
@@ -37,9 +50,10 @@ export class ProductService {
     );
   }
 
-
   addProduct(product: IProduct): Observable<IProduct> {
-    this.localProducts.push(product); // Save to local storage
+    this.productsEmitted = true;
+    this.localProducts.next([...this.localProducts.getValue(), { ...product, added:true, id: this.localProducts.getValue().length + 1 }]);
+    this.withoutSearchLocalPorducts.next([...this.withoutSearchLocalPorducts.getValue(), { ...product, added:true, id: this.withoutSearchLocalPorducts.getValue().length + 1 }]);
     return this.http.post<IProduct>(this.apiUrl, product).pipe(
       catchError((error) => {
         console.error('Error adding product:', error);
@@ -56,15 +70,7 @@ export class ProductService {
       })
     );
   }
- // addProduct(product: IProduct): Observable<IProduct> {
-  //   return this.http.post<IProduct>(this.apiUrl, product);
-  // }
-
-  // updateProductList(): void {
-  //   this.getProducts().subscribe((data) => {
-  //     this.productsSubject.next(data); // Update the products list
-  //   });
-  // }
+ 
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
       catchError((error) => {

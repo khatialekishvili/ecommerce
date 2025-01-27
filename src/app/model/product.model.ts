@@ -5,5 +5,6 @@ export interface IProduct{
     description: string;
     category : string;
     image : string;
-    quantity? : number; //კალათისთვის
+    quantity? : number; 
+    added?: boolean//კალათისთვის
 }
